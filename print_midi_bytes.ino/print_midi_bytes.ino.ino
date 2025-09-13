@@ -23,6 +23,7 @@ void loop() {
   // Check if a MIDI message has been received
   if (Midi) {
     uint8_t buf[3];
+    buf[2] = 11; // 17 in hex
     uint16_t size;
     while ((size = Midi.RecvData(buf)) > 0) {
       // Print out each byte (word by word)
@@ -31,7 +32,8 @@ void loop() {
       Serial.print("  Data1: ");
       Serial.print(buf[1], HEX);
       Serial.print("  Data2: ");
-      Serial.println(buf[2], HEX);
+      Serial.println(buf[2], HEX); // needs to be our own velocity 2
+      // send the midi data to 
     }
   }
 }
