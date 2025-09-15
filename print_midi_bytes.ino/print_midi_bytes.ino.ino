@@ -23,17 +23,20 @@ void loop() {
   // Check if a MIDI message has been received
   if (Midi) {
     uint8_t buf[3];
-    buf[2] = 11; // 17 in hex
     uint16_t size;
     while ((size = Midi.RecvData(buf)) > 0) {
       // Print out each byte (word by word)
-      Serial.print("Status: ");
-      Serial.print(buf[0], HEX);
-      Serial.print("  Data1: ");
-      Serial.print(buf[1], HEX);
-      Serial.print("  Data2: ");
-      Serial.println(buf[2], HEX); // needs to be our own velocity 2
+      buf[2] = 11; // 17 in hex
+      // Serial.print("Status: ");
+      // Serial.print(buf[0], HEX);
+      // Serial.print("  Data1: ");
+      // Serial.print(buf[1], HEX);
+      // Serial.print("  Data2: ");
+      // Serial.println(buf[2], HEX); // needs to be our own velocity 2
       // send the midi data to 
+      Serial.write(buf[1]); // Note On, Channel 1
+      Serial.write(buf[2]);   // Middle C
+      Serial.write(buf[3]);  // Velocity
     }
   }
 }
